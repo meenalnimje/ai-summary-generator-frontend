@@ -1,4 +1,4 @@
-# AI-Powered Meeting Notes Summarizer and Sharer
+[# AI-Powered Meeting Notes Summarizer and Sharer
 
 ## 1. Project Overview
 
@@ -91,7 +91,12 @@ The development of the AI-Powered Meeting Notes Summarizer and Sharer followed a
 | Storage       | Temporary in-memory/server file storage | Holds uploaded transcripts during processing.                           |
 
 ## 5. Installation
+Before starting, clone both the **frontend** and **backend** repositories into a common folder:
 
+```bash
+git clone https://github.com/meenalnimje/ai-summary-generator-frontend.git
+git clone https://github.com/meenalnimje/ai-summary-generator-backend.git
+```
 ### Frontend
 
 Navigate to the frontend project folder:
@@ -143,3 +148,4 @@ Deployed Application: https://ai-summary-generator.netlify.app/
 
 ### 7. Conclusion
 The application successfully meets all requirements: uploading transcripts, generating customizable summaries, editing summaries, and sharing them via email. By leveraging Gemini API for AI summarization and Nodemailer for email functionality, the project provides a simple yet powerful tool for enhancing meeting productivity.
+](https://github.com/meenalnimje/ai-summary-generator-backend.git)
