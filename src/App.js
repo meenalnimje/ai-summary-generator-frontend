@@ -9,6 +9,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
+  const [prompt, setPrompt] = useState("");
+
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -47,7 +49,7 @@ function App() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: extractedText }),
+          body: JSON.stringify({ text: extractedText, prompt }),
         }
       );
 
@@ -85,9 +87,7 @@ function App() {
       setEmail("");
       setSubject("");
     } catch (error) {
-      console.error(error);
-      console.log("erorr", error);
-
+      console.error("Error sending email", error);
       alert("Error sending email");
     }
   };
@@ -129,6 +129,17 @@ function App() {
         }}
       >
         {extractedText || "No text extracted yet."}
+      </div>
+
+      {/* Prompt input */}
+      <div style={{ marginTop: "20px" }}>
+        <input
+          type="text"
+          placeholder="Enter your prompt"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          style={{ width: "300px", padding: "5px" }}
+        />
       </div>
 
       <button
