@@ -1,70 +1,145 @@
-# Getting Started with Create React App
+# AI-Powered Meeting Notes Summarizer and Sharer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1. Project Overview
 
-## Available Scripts
+This project is a Full-Stack Application that allows users to upload meeting transcripts, generate AI-powered summaries, and share them via email. The application focuses on functionality, providing a simple yet effective interface for summarizing and sharing meeting notes.
 
-In the project directory, you can run:
+**Key Features:**
+- Upload text transcripts (e.g., meeting notes, call transcripts).
+- Input custom instructions/prompts for the summary.
+- Generate structured, editable summaries.
+- Share summaries via email.
 
-### `npm start`
+## 2. Approach
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The development of the AI-Powered Meeting Notes Summarizer and Sharer followed a step-by-step approach to ensure seamless functionality.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2.1 Uploading Transcripts
 
-### `npm test`
+**Frontend:**
+- File upload interface built with React.js with a dropdown to select file type (PDF or text).
+- `react-pdftotext` used to extract text from PDFs directly in the frontend.
+- Text files read using FileReader API.
+- Displayed extracted text in a preview box for user verification.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Backend:**
+- Received extracted text from the frontend.
+- Temporarily stored text in server memory for processing.
 
-### `npm run build`
+### 2.2 Custom Instructions / Prompts
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Frontend:**
+- Input field for custom prompts, e.g.,  
+  - "Summarize in bullet points for executives"  
+  - "Highlight only action items"
+- Connected input to summary API request along with extracted text.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Backend:**
+- `/api/summary` endpoint configured to accept both extracted text and custom prompt.
+- Passed inputs to Gemini API for context-aware summary generation.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2.3 Generating Summary
 
-### `npm run eject`
+**Frontend:**
+- "Generate Summary" button triggers backend API call.
+- Returned structured summary displayed in editable sections (Title, Short Summary, Key Points, Action Items).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Backend:**
+- `/api/summary` endpoint sends extracted text and prompt to Gemini API.
+- Processes API response to ensure structured format for frontend display.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 2.4 Editing Summary
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Frontend:**
+- All summary sections editable using controlled input fields.
+- Users can modify, add, or remove points before sharing.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Backend:**
+- No additional processing required; handled entirely on frontend.
 
-## Learn More
+### 2.5 Sharing via Email
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Frontend:**
+- Input fields for recipient email addresses and email subject.
+- "Send Summary" button triggers email API call.
+- Displays success or error messages based on response.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Backend:**
+- `/api/email` endpoint implemented using Nodemailer.
+- Formats summary into email body and sends to recipients.
 
-### Code Splitting
+**Responsibilities:**
+- Frontend: file uploads, PDF extraction, text preview, editing, and user input.
+- Backend: communication with Gemini API for summary generation and sending emails via Nodemailer.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 3. Process
 
-### Analyzing the Bundle Size
+1. **Uploading Transcripts:** Users upload Text/PDF files; frontend extracts content temporarily.  
+2. **Custom Instructions/Prompts:** Users optionally provide custom prompt to align summary with their needs.  
+3. **Generating Summary:** Click "Generate Summary" → transcript and prompt sent to Gemini API → structured summary returned (Title, Short Summary, Key Points, Action Items).  
+4. **Editing Summary:** Generated summary is editable; users can modify or add points.  
+5. **Sharing via Email:** Enter recipient emails and subject → click "Send Summary" → summary sent using Nodemailer.  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 4. Technology Stack
 
-### Making a Progressive Web App
+| Layer         | Technology         | Purpose                                                                 |
+|---------------|------------------|-------------------------------------------------------------------------|
+| Frontend      | React.js          | Simple UI for file upload, summary display, and email input. Extracts text from PDFs using `react-pdftotext`. |
+| Backend       | Node.js + Express.js | API endpoints for generating summaries and sending emails.             |
+| AI Service    | Gemini API        | Summarizes transcripts based on user prompts.                           |
+| Email Service | Nodemailer        | Sends generated summaries via email.                                     |
+| Storage       | Temporary in-memory/server file storage | Holds uploaded transcripts during processing.                           |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 5. Installation
 
-### Advanced Configuration
+### Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Navigate to the frontend project folder:
 
-### Deployment
+```bash
+cd ai-summary-generator-frontend
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+Install dependencies:
+npm install
+```
 
-### `npm run build` fails to minify
+```bash
+Create a .env file if required and add the backend API base URL.
+```
+```bash
+Start the frontend:
+npm start
+```
+### Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Navigate to the backend project folder:
+
+```bash
+cd ai-summary-generator-backend
+```
+```bash
+Install dependencies:
+npm install
+```
+```bash
+Create a .env file and add necessary credentials:
+
+GEMINI_API_KEY=your_gemini_api_key
+EMAIL_USER=your_email@example.com
+EMAIL_PASS=your_email_password_or_app_specific_pass
+ORIGIN=your_frontend_url
+```
+```bash
+Start the backend server:
+npm run hmr
+```
+
+
+### 6. Links
+Deployed Application: https://ai-summary-generator.netlify.app/
+
+
+### 7. Conclusion
+The application successfully meets all requirements: uploading transcripts, generating customizable summaries, editing summaries, and sharing them via email. By leveraging Gemini API for AI summarization and Nodemailer for email functionality, the project provides a simple yet powerful tool for enhancing meeting productivity.
